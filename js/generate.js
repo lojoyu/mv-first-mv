@@ -23,17 +23,25 @@ AFRAME.registerComponent('generatefloor', {
 
     tick: function (time, timeDelta) {
         
+
         //count on start
         if (this.start) {
-            this.oldTime = time;
+            this.startTime = time;
             this.start = false;
         }
 
-        //TODO: check if time passsss
-        if (true) {
-            //TODO: change position here
+        //check if time passsss
+        if (time - this.startTime > 3000) {
+            //change position here
+            //console.log('[tick] START!');
+            
+            let pos = this.el.getAttribute('position');
+            pos.z += 2 * timeDelta / 1000;
+            //pos.z += 0.01;
 
-
+            if (pos.z >= 30) {
+                pos.z = 0;
+            }
 
         }
     },
@@ -44,7 +52,7 @@ AFRAME.registerComponent('generatefloor', {
         // or
         // let planepool = this.el.sceneEl.components['pool__plane'];
 
-        for(let i=0; i<30; i++){
+        for(let i=0; i<100; i++){
             setTimeout(()=>{
                 let el = planepool.requestEntity();
                 el.setAttribute('position', '0 0 '+(i*-1));
